@@ -11,7 +11,7 @@
 
 #show: bubble.with(
   title: "Commutative Algebra",
-  subtitle: "Beta Ver0.26",
+  subtitle: "Beta Ver0.26.1",
   author: "XNC",
   //affiliation: "School of Mathematics and Statistics",
   date: datetime.today().display(),
@@ -26,16 +26,26 @@ Created in 2025 Spring, Updated in 2025.06.
 - Supplement https://byeongsuyu.github.io/_pdf/Atiyah_Macdonald_Supplement.pdf
 考试范围, 前四章作业编号的前十道题
 
-XNC 于 ZZU 2025.06.25
+#align(right)[XNC 于 ZZU 2025.06.25]
+
 //#heading(level: 1, numbered: false)
 
-#import "@preview/equate:0.3.2": equate
-#show: equate.with(
-  breakable: true,
-  sub-numbering: true,
-  number-mode: "line", // 每一行都添加编号
-)
-#set math.equation(numbering: "(1.1)", supplement: "Eq.")
+#show heading.where(level: 1): it => {
+  counter(math.equation).update(0)
+  it
+}
+
+#set math.equation(numbering: n => {
+  numbering("(1.1)", counter(heading).get().first(), n)
+  // if you want change the number of number of displayed
+  // section numbers, modify it this way:
+  /*
+  let count = counter(heading).get()
+  let h1 = count.first()
+  let h2 = count.at(1, default: 0)
+  numbering("(1.1.1)", h1, h2, n)
+  */
+})
 
 #let neq = $eq.not$
 #let ker = math.op("ker")
@@ -44,15 +54,6 @@ XNC 于 ZZU 2025.06.25
 #let iff = $arrow.l.r.double$
 #let cap = $ inter $
 #let cup = $ union $
-
-// 自定义公式编号方式
-#let numbered-equation(body) = math.equation(
-  body,
-  number: "#counter(chapter).at().#counter(equation).incr()",
-)
-// Edit this content to your liking
-#outline(depth: 2)
-#pagebreak() // 分隔目录与正文
 = Ring
 == Rings & Ring Homomorphisms
 #definition(title: "Ring")[
@@ -399,10 +400,10 @@ where $ol(a) = a+frak(a)$.
 
 A-module is faithful if $Ann(M)=0$. If $Ann(M)=frak(a)$, then $M$ is faithful as $A\/frak(a)$-module.
 
-4. Direct Sum: Set $M_(i)$ is A-module, then $plus.circle M$ is a A-module (and abelian group), $|I| < infinity$,
+4. Direct Sum: Set $M_(i)$ is A-module, then $plus.o M$ is a A-module (and abelian group), $|I| < infinity$,
 $
-  (x_(1), dots x_(n))+(y_(1),dots y_(n)) & = (x_(1)+y_(1), dots x_(n)+y_(n)) in plus.circle M_(i) \
-                    a(x_(1), dots x_(n)) & = (a x_(1), dots a x_(n)) in plus.circle M_(i)
+  (x_(1), dots x_(n))+(y_(1),dots y_(n)) & = (x_(1)+y_(1), dots x_(n)+y_(n)) in plus.o M_(i) \
+                    a(x_(1), dots x_(n)) & = (a x_(1), dots a x_(n)) in plus.o M_(i)
 $
 where almost all $x_(i)=0$ expect finite $i$. If we drop the restriction on the number of non-zero components, we get the direct product $product M_(i)$.
 
@@ -411,11 +412,11 @@ where almost all $x_(i)=0$ expect finite $i$. If we drop the restriction on the 
 ]
 
 If set $ frak(a) = <(0,dots,0, 1, 0, dots, 0)> = {(0,dots,0, a_(i), 0, dots, 0): a_(i) in A_(i)} $
-the ring $A$ considered as A-module as: $A=plus.circle_(i in I) frak(a)_(i)$
+the ring $A$ considered as A-module as: $A=plus.o_(i in I) frak(a)_(i)$
 #remark[
-  Give a module decomposition $A = plus.circle_(i=1)^(n) frak(a)_(i)$ of $A$ as a direct sum of ideals, we have
+  Give a module decomposition $A = plus.o_(i=1)^(n) frak(a)_(i)$ of $A$ as a direct sum of ideals, we have
   $ A tilde.equiv product_(i=1)^(n)(A\/frak(b)_(i)), $
-  where $frak(b)_(i) = plus.circle_(j neq i) frak(a)_(i)$. Each ideal $frak(a)_(j)$ is a ring (isomorphic to $A \/frak(b)_(i)$), The identity element $e_(i) in frak(a)_(i)$ is an idempitent in $A$, and $frak(a)_(i) = e_(i)$.
+  where $frak(b)_(i) = plus.o_(j neq i) frak(a)_(i)$. Each ideal $frak(a)_(j)$ is a ring (isomorphic to $A \/frak(b)_(i)$), The identity element $e_(i) in frak(a)_(i)$ is an idempitent in $A$, and $frak(a)_(i) = e_(i)$.
 ]
 #definition(title: "f.g. module")[$M$ is a finite generated A-module, if
   $
@@ -425,7 +426,7 @@ the ring $A$ considered as A-module as: $A=plus.circle_(i in I) frak(a)_(i)$
 // This is a commit
 #definition(
   title: "f.g. free module",
-)[$M$ is a f.g. free A-module, if $M=plus.circle_(i=1)^(n) A_(i)$, where $A(i)$ is a A-module.
+)[$M$ is a f.g. free A-module, if $M=plus.o_(i=1)^(n) A_(i)$, where $A(i)$ is a A-module.
 ]
 #proposition()[
   $M$ is f.g. A-module $<=> M tilde.equiv A^n\/I$, where I is an ideal, $n>0$.
@@ -482,13 +483,13 @@ the ring $A$ considered as A-module as: $A=plus.circle_(i in I) frak(a)_(i)$
 == Exact sequences
 #definition(title: "Exact sequence")[
   A sequence of A-modules and homomorphisms
-  $ dots -> M_(i-1) xarrow(f_(i)) M_(i) xarrow(f_(i+1)) M_(i+1) -> dots #<exact-seq> $
+  $ dots -> M_(i-1) xarrow(f_(i)) M_(i) xarrow(f_(i+1)) M_(i+1) -> dots $<exact-seq>
   is exact at $M_(i)$, if $Im(f_(i)) = ker(f_(i+1))$. The sequence is exact if it is exact at every $M_(i)$. In particular,
   $
-    0 -> M' xarrow(f) M "is exact" & <=> f "is injective" \
-    M xarrow(g) M'' ->0 "is exact" & <=> g "is surjective" \
-    0 -> M' xarrow(f) M xarrow(g) M'' ->0 "is exact" & <=> f "is injective" and g "is surjective" #<exact-sequence-example-3>
-  $
+                      0 -> M' xarrow(f) M "is exact" & <=> f "is injective" \
+                      M xarrow(g) M'' ->0 "is exact" & <=> g "is surjective" \
+    0 -> M' xarrow(f) M xarrow(g) M'' ->0 "is exact" & <=> f "is injective" and g "is surjective"
+  $<exact-sequence-example-3>
   and $g$ induces a isomorphism of $Coker(f) = M\/f(M')$ onto $M''$
 ]
 A sequence of type @exact-sequence-example-3 is called short exact sequence. Any long exact sequence @exact-seq can be split up into short exact sequence, if $N_(i) = Im(f_(i)) = ker(f_(i+1))$, we have short exact sequence
@@ -582,8 +583,8 @@ $ 0-> N_(i) -> M_(i) -> N_(i+1) -> 0 , quad forall i $
   $ tau : T -> T' "s.t." tau compose g = g' $
 ]<prop:2.12>
 
-#let oplus = $plus.circle$
-#let otimes = $times.circle$
+#let oplus = $plus.o$
+#let otimes = $times.o$
 
 #corollary()[Let $x_(i) in M, y_(i) in N$, s.t. $sum x_(i) otimes y_(i) = 0 in M otimes N$, then exist f.g. submodule $M_0$ of $M$, $N_(0)$ of $N$, s.t. $sum x_(i) otimes y_(i) = 0 in M_(0) otimes N_(0)$
 ]
