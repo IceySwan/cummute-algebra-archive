@@ -1,25 +1,23 @@
-#import "styles/lib.typ": *
-#import "styles/operator.typ": *
-#import "assets/logo.typ": algebra-logo
-
-#show: show-theorion
+#import "/styles/lib.typ": *
+#import "/assets/atiyah-commute-cover.typ": commutative-algebra-logo
 
 #show: math-note.with(
   title: "Commutative Algebra",
   subtitle: "Lecture Notes & Revision Guide",
   author: "XNC",
-  date: datetime(year: 2026, month: 11, day: 8),
-  version: "v0.26.2",
-  logo: algebra-logo(size: 9.2cm),
+  date: datetime(year: 2026, month: 11, day: 23),
+  version: "v0.26.3",
+  logo: commutative-algebra-logo(),
 )
 
 #frontmatter[
   #heading(numbering: none, level: 1)[Preface]
-  Written in spring 2025 and first updated in June 2025. Revised on 2026-11-08.
+  Written in spring 2025 and first updated in June 2025. Revised on 2026-11-23.
   - Professor: 丁岩峭
   - Textbook: M.F. Atiyah and I.G. Macdonald, _Introduction to Commutative Algebra_, Addison-Wesley.
   - Supplement: https://byeongsuyu.github.io/_pdf/Atiyah_Macdonald_Supplement.pdf
-  - Exam scope: The first ten questions from the assignments for the chapter 1-4.
+  - Arrangement: the chapters follow the textbook; examples and proofs are expanded for revision.
+  - Exam scope: The first ten questions from the assignments for chapters 1–4.
 
   #align(right)[XNC 于 ZZU 2025.06.25]
 

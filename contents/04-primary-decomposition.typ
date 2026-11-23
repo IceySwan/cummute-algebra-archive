@@ -1,7 +1,9 @@
 #import "/styles/lib.typ": *
-#import "/styles/operator.typ": *
+#import "../figures/04-associated-primes.typ": associated-primes-diagram
 
 = Primary Decomposition
+
+== Primary Ideals and Primary Decompositions
 #definition(title: "Primary")[
   A proper ideal $frak(q)$ of $A$ is primary if, whenever $x y in frak(q)$ and $x in.not frak(q)$, some positive power $y^n$ belongs to $frak(q)$.
 ]
@@ -9,7 +11,7 @@
   Every prime ideal is primary. The definition says exactly that $A\/frak(q)$ is nonzero and every zero-divisor in it is nilpotent.
 ]
 #remark[
-  If $frak(q)$ is a primary ideal of $B$, its contraction $frak(q)^c$ along a ring homomorphism $A -> B$ is primary in $A$. Indeed, the induced map $A\/frak(q)^c -> B\/frak(q)$ is injective, so any zero-divisor in the first ring has nilpotent image and is therefore nilpotent.
+  If $frak(q)$ is a primary ideal of $B$, its contraction $frak(q)^c$ along a ring homomorphism $A -> B$ is primary in $A$. Indeed, the induced map $A\/frak(q)^c -> B\/frak(q)$ is injective. If $x y=0$ with $y != 0$ in $A\/frak(q)^c$, injectivity makes the image of $y$ nonzero, so the image of $x$ is a zero-divisor of $B\/frak(q)$, hence nilpotent; therefore $x$ is nilpotent.
 ]
 #proposition()[
   If $frak(q)$ is primary, then $r(frak(q))$ is the smallest prime ideal containing $frak(q)$.
@@ -21,10 +23,13 @@
   A primary ideal $frak(q)$ with $r(frak(q))=frak(p)$ is called $frak(p)$-primary.
 ]
 #proposition()[
-  If $r(frak(a))$ is maximal, then $frak(a)$ is primary.
+  If $r(frak(a))$ is maximal, then $frak(a)$ is primary. In particular, for a maximal ideal $frak(m)$, the powers $frak(m)^n$ with $n >= 1$ are $frak(m)$-primary.
 ]
 #proof[
-  Every prime containing $frak(a)$ contains $frak(m)=r(frak(a))$, hence equals $frak(m)$ by maximality. By @prop:quotient-ideals, $A\/frak(a)$ has the single prime $frak(m)\/frak(a)$, which is its nilradical by @prop:radical-form. Every zero-divisor is a nonunit, so @non-unit puts it in this unique maximal ideal. Thus all zero-divisors in the quotient are nilpotent, as required.
+  Every prime containing $frak(a)$ contains $frak(m)=r(frak(a))$, hence equals $frak(m)$ by maximality. By @prop:quotient-ideals, $A\/frak(a)$ has the single prime $frak(m)\/frak(a)$, which is its nilradical by @prop:radical-form. Every zero-divisor is a nonunit, so @non-unit puts it in this unique maximal ideal. Thus all zero-divisors in the quotient are nilpotent, as required. For a maximal ideal, $r(frak(m)^n)=r(frak(m))=frak(m)$, since taking radicals is unaffected by powers.
+]
+#example[
+  In $A=k[x,y]$ the ideal $frak(q)=(x,y^2)$ is $frak(m)$-primary for $frak(m)=(x,y)$, since $A\/frak(q) tilde.equiv k[y]\/(y^2)$, whose zero-divisors are exactly the elements of $(overline(y))$, and all of these square to zero. It is not a power of $frak(m)$: since $y in frak(m)$ but $y in.not frak(q)$, we have $frak(q) != frak(m)$; and for $s >= 2$, $frak(m)^s$ contains no element of degree $1$, whereas $x in frak(q)$. Thus a primary ideal need not be a power of its radical.
 ]
 #lemma()[
   If $frak(q)_1,dots,frak(q)_n$ are $frak(p)$-primary and $n >= 1$, then $frak(q)=inter.big_(i=1)^n frak(q)_i$ is $frak(p)$-primary.
@@ -32,14 +37,14 @@
 #proof[
   The radical of a finite intersection is the intersection of the radicals. A power in the intersection lies in each ideal. Conversely, an element in all the radicals has a power in each ideal, and the largest of these finitely many exponents works for every ideal. Thus $r(frak(q))=frak(p)$. If $x y in frak(q)$ and $x in.not frak(q)$, choose $i$ with $x in.not frak(q)_i$. Then $y in r(frak(q)_i)=frak(p)=r(frak(q))$, proving primariness.
 ]
-#block(breakable: false)[#lemma()[
+#lemma()[
     Let $frak(q)$ be $frak(p)$-primary and $x in A$. Then
 
     1. If $x in frak(q)$, then $(frak(q):x)=A$.
     2. If $x in.not frak(q)$, then $(frak(q):x)$ is $frak(p)$-primary.
     3. If $x in.not frak(p)$, then $(frak(q):x)=frak(q)$.
   ]<Lem:4.2>
-]
+
 #proof[
   For (1), every product $a x$ belongs to $frak(q)$. For (2), $(frak(q):x)$ is proper since it excludes $1$. If $a in (frak(q):x)$, then $x a in frak(q)$ and $x in.not frak(q)$, so $a in frak(p)$. Thus $frak(q) subset.eq (frak(q):x) subset.eq frak(p)$, giving radical $frak(p)$. If $a b in (frak(q):x)$ and $a in.not (frak(q):x)$, then $(a x)b in frak(q)$ and $a x in.not frak(q)$, giving $b in frak(p)$. Hence the colon ideal is primary. For (3), if $a x in frak(q)$, then $a in frak(q)$ since $x$ is outside the radical. The reverse inclusion follows from the ideal property.
 ]
@@ -56,6 +61,11 @@
 ]
 The second condition makes each component essential to the intersection. By @lem:common-radical, components with the same radical can be merged. Removing redundant components then gives a minimal decomposition.
 
+#example[
+  In $A=bb(Z)$ the ideal $(12)$ has the minimal primary decomposition $(12)=(4) inter (3)$. The ideal $(4)$ is $(2)$-primary, since $r((4))=(2)$ and $(2)$ is maximal, while $(3)$ is prime. Neither component contains the other, so the decomposition is minimal, and the radicals of the two components are the primes $(2)$ and $(3)$.
+]
+
+== First Uniqueness Theorem
 #theorem(title: "1st uniqueness theorem")[
   Let $frak(a)=inter.big_(i=1)^n frak(q)_i$ be a minimal primary decomposition and put $frak(p)_i=r(frak(q)_i)$. The $frak(p)_i$ are precisely the prime ideals among the ideals $r(frak(a):x)$ with $x in A$. Thus their set depends only on $frak(a)$.
 ]<thm:1-uniqueness>
@@ -81,6 +91,13 @@ A decomposable proper ideal is primary exactly when it has one associated prime.
 #remark[
   In the example, $y^2$ belongs only to the second component and $x$ belongs only to the first. The formula in @thm:1-uniqueness gives $r(frak(a):y^2)=(x)$ and $r(frak(a):x)=(x,y)$. The former is the minimal associated prime and the latter is embedded. The radical is $(x)$. The ideal $frak(a)$ fails the primary condition because $x y in frak(a)$, $x in.not frak(a)$, and every positive power of $y$ lies outside $frak(a)$.
 ]
+
+The diagram below records the inclusions among $frak(a)$, the two primary components, their sum, and the embedded prime. The associated primes are $(x)$ and $(x,y)$; the components are $frak(q)_1=(x)$ and $frak(q)_2=(x,y)^2$, with $frak(q)_1 inter frak(q)_2=frak(a)$ and $frak(q)_1+frak(q)_2=(x,y^2)$.
+
+#associated-primes-diagram()
+
+
+
 #proposition()[
   If $frak(a)$ is decomposable, each prime ideal containing it contains a minimal associated prime of $frak(a)$. Consequently the minimal associated primes are precisely the primes minimal over $frak(a)$.
 ]
@@ -93,10 +110,15 @@ A decomposable proper ideal is primary exactly when it has one associated prime.
   If $frak(a)$ is decomposable with associated primes $frak(p)_1,dots,frak(p)_n$, then
   $ union.big_(i=1)^n frak(p)_i={x in A : (frak(a):x) != frak(a)}. $
   In particular, if $(0)$ is decomposable, the set $D={x in A : (0:x) != (0)}$ of zero-divisors is the union of the primes associated with $(0)$.
-]
+]<prop:associated-union>
 #proof[
   If $x$ is outside all $frak(p)_i$, then @Lem:4.2 gives $(frak(q)_i:x)=frak(q)_i$ for each $i$. Intersecting gives $(frak(a):x)=frak(a)$. Conversely, if $x in frak(p)_i$, use the witness $x_i$ from the proof of @thm:1-uniqueness. Since $x in r(frak(a):x_i)$, there is an $n >= 1$ with $x^n x_i in frak(a)$. For the least such $n$, the element $x^(n-1)x_i$ lies outside $frak(a)$ and belongs to $(frak(a):x)$. This proves the equality. Taking $frak(a)=(0)$ gives the statement for $D$.
 ]
+#example[
+  In $A=k[x,y]\/(x y)$ the zero ideal is $(overline(x)) inter (overline(y))$, and both components are prime, with quotients $k[y]$ and $k[x]$. Hence $(0)$ is decomposable with associated primes $(overline(x))$ and $(overline(y))$, both minimal. The zero-divisors are exactly their union, the classes represented by polynomials divisible by $x$ or by $y$, in agreement with @prop:associated-union.
+]
+
+== Second Uniqueness Theorem
 #proposition()[
   Let $S$ be a multiplicatively closed subset of $A$ and let $frak(q)$ be $frak(p)$-primary.
 
@@ -122,18 +144,23 @@ A decomposable proper ideal is primary exactly when it has one associated prime.
 #definition()[
   A set $Sigma$ of primes associated with $frak(a)$ is isolated if it is closed downwards among those primes. Thus if $frak(p) in Sigma$ and $frak(p)' subset.eq frak(p)$ is associated with $frak(a)$, then $frak(p)' in Sigma$.
 ]
-#block(breakable: false)[#theorem(title: "2nd uniqueness theorem")[
+#theorem(title: "2nd uniqueness theorem")[
     Let $frak(a)$ be decomposable, with minimal primary decomposition
     $ frak(a)=inter.big_(i=1)^n frak(q)_i, quad frak(p)_i=r(frak(q)_i). $<eq:4.4>
     For an isolated set $Sigma$ of associated primes, the intersection $inter.big_(i:frak(p)_i in Sigma) frak(q)_i$ is independent of the primary decomposition in @eq:4.4. In particular the components corresponding to minimal primes are individually unique.
   ]<thm:2-uniqueness>
-]
+
 #proof[
   The empty set gives the intersection $A$. Otherwise take $S=A without union.big_(frak(p) in Sigma) frak(p)$. Since the ideals in $Sigma$ are proper and prime, $1 in S$ and products of elements of $S$ remain in $S$.
 
   Every prime in $Sigma$ is disjoint from $S$. If an associated prime $frak(p)'$ outside $Sigma$ were disjoint from $S$, it would be contained in the finite union of the primes in $Sigma$. By (1) of @prop:1.11 it would lie in one of them, contrary to downward closure. Thus localization at $S$ retains exactly the components indexed by $Sigma$.
 
   By @prop:localized-components, their intersection is $S(frak(a))$. The set of associated primes is intrinsic by @thm:1-uniqueness, so for the given $Sigma$, the ideal $S(frak(a))$ is independent of the decomposition. A singleton consisting of a minimal associated prime is isolated, giving uniqueness of its component.
+]
+#remark[
+  The isolated components are determined by $frak(a)$, but the embedded components are not. With $frak(a)=(x^2,x y)=(x) inter (x,y)^2$, the ideal $(x^2,y)$ is again $(x,y)$-primary, and
+  $ frak(a)=(x) inter (x^2,y) $
+  is a second minimal decomposition with the same associated primes and a different embedded component, since $(x^2,y) != (x,y)^2$.
 ]
 #remark[
   The prime correspondence @prop:3.11 selects the primes disjoint from the denominators. The same selection governs the primary components by @prop:localized-components, and contraction recovers the intersection selected in @thm:2-uniqueness. For $(x^2,x y)$, localization at the prime $(x)$ inverts $y$, so the embedded component with radical $(x,y)$ becomes the whole localized ring. Contraction recovers the component $(x)$.

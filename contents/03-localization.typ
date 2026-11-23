@@ -1,8 +1,17 @@
 #import "/styles/lib.typ": *
-#import "/styles/operator.typ": *
+#import "../figures/03-localization-diagrams.typ": (
+  localized-tensor-square-diagram,
+  module-localization-universal-diagram, // 按顺序
+  ring-localization-universal-diagram,
+)
 
 = Rings and Modules of Fractions
-Let $A$ be a ring and $S subset.eq A$ a multiplicatively closed subset, so $1 in S$ and $s t in S$ for $s,t in S$. For an $A$-module $M$, define
+
+== Localization
+#definition(title: "Multiplicatively closed subset")[
+  A subset $S subset.eq A$ is multiplicatively closed if $1 in S$ and $s t in S$ for $s,t in S$.
+]
+Let $A$ be a ring and $S subset.eq A$ a multiplicatively closed subset. For an $A$-module $M$, define
 $
   (m,s) tilde (n,t) quad <=> quad u(t m-s n)=0 "for some" u in S.
 $
@@ -36,11 +45,21 @@ which is killed by $u w$. The action calculation for $M=A$ also verifies multipl
   Since $(s\/1)(1\/s)=1$, any such map satisfies $h(a\/s)=g(a)g(s)^(-1)$. Conversely, if $a\/s=a'\/s'$, then some $u in S$ satisfies $u(s'a-s a')=0$. Applying $g$ and cancelling $g(u),g(s),g(s')$ proves that the formula is well-defined. The formulas for addition, multiplication and identity show it is a ring homomorphism, and $h(a\/1)=g(a)$.
 ]
 
-The module version uses the natural $A$-linear map $M -> S^(-1)M$, $m |-> m\/1$. For an $S^(-1)A$-module $P$ and an $A$-linear map $g:M -> P$, the unique $S^(-1)A$-linear extension sends $m\/s$ to $(1\/s)g(m)$. Applying $g$ to the defining equivalence and cancelling the units $u\/1$, $s\/1$ and $t\/1$ proves well-definedness. The fraction rules give linearity, and $m\/s=(1\/s)(m\/1)$ forces uniqueness.
+The following commutative triangle illustrates the universal property.
+
+#ring-localization-universal-diagram()
+
+The module version uses the natural $A$-linear map $iota:M -> S^(-1)M$, $m |-> m\/1$. For an $S^(-1)A$-module $P$ and an $A$-linear map $g:M -> P$, the unique $S^(-1)A$-linear extension sends $m\/s$ to $(1\/s)g(m)$. Applying $g$ to the defining equivalence and cancelling the units $u\/1$, $s\/1$ and $t\/1$ proves well-definedness. The fraction rules give linearity, and $m\/s=(1\/s)(m\/1)$ forces uniqueness. The following diagram illustrates the universal property.
+
+#module-localization-universal-diagram()
 
 If each $s in S$ acts invertibly on $M$, the natural map $M -> S^(-1)M$ is an isomorphism of $A$-modules. Indeed, the zero criterion gives injectivity, and writing $m=s n$ gives $m\/s=n\/1$. The inverse sends $m\/s$ to the unique $n$ with $s n=m$. If $M$ already has an $S^(-1)A$-action extending its $A$-action, this inverse is $S^(-1)A$-linear by the module universal property applied to $id_M$.
 
-Write $A_(frak(p))$ and $M_(frak(p))$ for localization at $S=A without frak(p)$ when $frak(p)$ is prime. A homomorphism $g:M -> N$ induces $S^(-1)g$ by $m\/s |-> g(m)\/s$, since an equality of fractions remains true after applying $g$ to the cross-multiplied difference.
+#example[
+  In $A=k[x,y]\/(x y)$ let $S={x^n : n >= 0}$. Since $x y=0$ and $x$ becomes a unit, $y=(x y)\/x=0$ in $S^(-1)A$, and hence $S^(-1)A tilde.equiv k[x,x^(-1)]$. In the same way, localizing a module kills every element annihilated by an element of $S$.
+]
+
+Write $A_(frak(p))$ and $M_(frak(p))$ for localization at $S=A without frak(p)$ when $frak(p)$ is prime. The set $A without frak(p)$ is multiplicatively closed exactly when $frak(p)$ is prime. A homomorphism $g:M -> N$ induces $S^(-1)g$ by $m\/s |-> g(m)\/s$, since an equality of fractions remains true after applying $g$ to the cross-multiplied difference.
 
 #proposition()[
   The ring $S^(-1)A$ and its natural map $f:A -> S^(-1)A$ have the following properties.
@@ -58,16 +77,19 @@ Write $A_(frak(p))$ and $M_(frak(p))$ for localization at $S=A without frak(p)$ 
 #proof[
   Property (1) gives $h$ by @prop:Universal-property, and (3) gives surjectivity. If $h(a\/s)=0$, then $g(a)=0$, so $u a=0$ for some $u in S$ by (2). Thus $a\/s=0$.
 ]
+#remark[
+  The ring $S^(-1)A$ is the zero ring exactly when $0 in S$. If $0 in S$ then $1\/1=0\/1$; conversely $S^(-1)A=0$ forces $1\/1=0$, so some $u in S$ kills $1$. For $S={f^n : n >= 0}$ the ring $S^(-1)A$ is written $A_f$, the localization that inverts $f$.
+]
 
 #proposition()[
   Localization is exact. If $M' xarrow(f) M xarrow(g) M''$ is exact at $M$, then its localization is exact at $S^(-1)M$.
 ]<prop:3.3>
 #proof[
-  Since $g compose f=0$, the localized composite is zero. Conversely, suppose $g(m)\/s=0$. Then $t g(m)=0$ for some $t in S$, so $t m in ker(g)=Im(f)$. Choose $m' in M'$ with $t m=f(m')$. The equality
+  Since $g compose f=0$, the localized composite is zero. Conversely, suppose $g(m)\/s=0$. Then $t g(m)=0$ for some $t in S$, so $t m in Ker(g)=Im(f)$. Choose $m' in M'$ with $t m=f(m')$. The equality
   $ m\/s=(t m)\/(t s)=f(m')\/(t s) $
   puts $m\/s$ in $Im(S^(-1)f)$.
 
-  Localization takes zero to zero. For injective $f$, apply the middle-term argument to $0 -> M' -> M$ to obtain $ker(S^(-1)f)=0$. For surjective $g$, apply it to $M -> M'' -> 0$ to obtain $Im(S^(-1)g)=S^(-1)M''$.
+  Localization takes zero to zero. For injective $f$, apply the middle-term argument to $0 -> M' -> M$ to obtain $Ker(S^(-1)f)=0$. For surjective $g$, apply it to $M -> M'' -> 0$ to obtain $Im(S^(-1)g)=S^(-1)M''$.
 ]
 #corollary()[
   If $N,P$ are submodules of $M$, identify their localizations with submodules of $S^(-1)M$. Then
@@ -119,18 +141,22 @@ Write $A_(frak(p))$ and $M_(frak(p))$ for localization at $S=A without frak(p)$ 
   The $A$-bilinear map $(m,n) |-> (m\/1) otimes (n\/1)$ induces a map on $M otimes_A N$. Extend it by the module universal property to obtain $G$ on $S^(-1)(M otimes_A N)$. Then $G((m otimes n)\/(s t))=(m\/s) otimes (n\/t)$. These tensors generate the source of $F$, and the fractions $(m otimes n)\/1$ generate its target over $S^(-1)A$, so the two composites are identities. The formulas also show that $F$ is natural in both variables.
 ]
 
-== Local properties
+For homomorphisms $f:M -> M'$ and $g:N -> N'$, naturality is the commutativity of the following square, where $F'$ is the corresponding isomorphism for $M',N'$.
+
+#localized-tensor-square-diagram()
+
+== Local Properties
 #definition(title: "Local properties")[
   A property of $A$, or of an $A$-module $M$, is local if it holds exactly when it holds for all $A_(frak(p))$, or for all $M_(frak(p))$ as $A_(frak(p))$-modules, respectively, as $frak(p)$ ranges over the prime ideals of $A$.
 ]
-#block(breakable: false)[#proposition()[
+#proposition()[
     For an $A$-module $M$, the following are equivalent.
 
     1. $M=0$.
     2. $M_(frak(p))=0$ for every prime ideal $frak(p)$ of $A$.
     3. $M_(frak(m))=0$ for every maximal ideal $frak(m)$ of $A$.
   ]<prop:3.8>
-]
+
 #proof[
   The zero module localizes to zero, and maximal ideals are prime. Conversely, if $x != 0$ in $M$, choose a maximal ideal $frak(m)$ containing the proper ideal $Ann(x)$. The fraction $x\/1$ is nonzero in $M_(frak(m))$, since any element killing $x$ lies in $frak(m)$.
 ]
@@ -138,10 +164,10 @@ Write $A_(frak(p))$ and $M_(frak(p))$ for localization at $S=A without frak(p)$ 
   A homomorphism $phi:M -> N$ is injective exactly when $phi_(frak(p))$ is injective for every prime $frak(p)$, or equivalently when $phi_(frak(m))$ is injective for every maximal $frak(m)$. The same equivalences hold for surjectivity.
 ]<prop:local-maps>
 #proof[
-  By @prop:3.3, $(ker(phi))_(frak(p)) tilde.equiv ker(phi_(frak(p)))$ and $(Coker(phi))_(frak(p)) tilde.equiv Coker(phi_(frak(p)))$. Apply @prop:3.8 to the kernel for injectivity and to the cokernel for surjectivity.
+  By @prop:3.3, $(Ker(phi))_(frak(p)) tilde.equiv Ker(phi_(frak(p)))$ and $(Coker(phi))_(frak(p)) tilde.equiv Coker(phi_(frak(p)))$. Apply @prop:3.8 to the kernel for injectivity and to the cokernel for surjectivity.
 ]
 #remark[
-  The same zero test detects exactness at an intermediate module. For a complex $U xarrow(f) V xarrow(g) W$, localize the quotient $ker(g)\/Im(f)$ by @prop:3.3. Its vanishing at all maximal ideals is equivalent to exactness at $V$.
+  The same zero test detects exactness at an intermediate module. For a complex $U xarrow(f) V xarrow(g) W$, localize the quotient $Ker(g)\/Im(f)$ by @prop:3.3. Its vanishing at all maximal ideals is equivalent to exactness at $V$.
 ]
 
 Flatness is a local property.
@@ -158,7 +184,7 @@ Flatness is a local property.
   Assume (3) and let $U -> V$ be an injection of $A$-modules. At each maximal ideal $frak(m)$ it localizes to an injection. By flatness of $M_(frak(m))$ and @prop:localized-tensor, the map $U otimes_A M -> V otimes_A M$ is injective after localization at each $frak(m)$. By @prop:local-maps it is injective, and the injection criterion for flatness gives (1).
 ]
 
-== Extended and contracted ideals in rings of fractions
+== Extended and Contracted Ideals in Rings of Fractions
 #definition()[
   For the natural homomorphism $f:A -> S^(-1)A$, use $e$ and $c$ for extension and contraction, as in @prop:extension-contraction. For an ideal $frak(a)$ of $A$, the extension $frak(a)^e=S^(-1)frak(a)$ consists of fractions with a representative whose numerator lies in $frak(a)$, by the common denominator rule.
 ]
@@ -192,10 +218,15 @@ Flatness is a local property.
   Apply (4) of @prop:3.11 to $(0)$.
 ]
 #corollary()[
-  For a prime ideal $frak(p)$ of $A$, the primes of $A_(frak(p))$ correspond to the primes of $A$ contained in $frak(p)$. In particular, $A_(frak(p))$ is local with maximal ideal $frak(p)A_(frak(p))$.
+  For a prime ideal $frak(p)$ of $A$, the primes of $A_(frak(p))$ correspond to the primes of $A$ contained in $frak(p)$. In particular, $A_(frak(p))$ is local with maximal ideal $frak(p)A_(frak(p))$, and its residue field is the field of fractions of $A\/frak(p)$.
 ]
 #proof[
   The primes disjoint from $A without frak(p)$ are precisely the primes contained in $frak(p)$. By (3) of @prop:3.11, $frak(p)A_(frak(p))$ is the largest prime. It is contained in some maximal ideal, which is prime and hence contained in $frak(p)A_(frak(p))$, so the two are equal. Every maximal ideal is prime and thus equals this largest prime.
+
+  The quotient $A_(frak(p))\/frak(p)A_(frak(p))$ is $S^(-1)(A\/frak(p))$ for $S=A without frak(p)$, and the image of $S$ in the domain $A\/frak(p)$ consists of all nonzero elements. Hence the quotient is the field of fractions of $A\/frak(p)$.
+]
+#example[
+  Take $A=bb(Z)$ and $frak(p)=(p)$ with $p$ a prime number. Then $A_(frak(p))$ is the subring of $bb(Q)$ consisting of the fractions $a\/b$ with $p ∤ b$. Its maximal ideal consists of the fractions whose numerator is divisible by $p$, and every element outside it is a unit. Thus $bb(Z)_((p))$ is local, with residue field $bb(F)_p$.
 ]
 
 #proposition()[

@@ -2,21 +2,26 @@
 // Styles Public Interface
 // ============================================================
 
-// 1. Theme, Fonts & Colors
 #import "theme.typ": (
+  accent,
+  accent-tint,
+  alert-color,
   body-font,
   cjk-font-stack,
   code-font,
-  environment-font,
+  fig-font-size,
   fill-color,
+  guide,
   heading-font,
+  ink,
   link-color,
   primary-color,
   secondary-color,
   stroke-color,
+  text-color,
+  tint,
 )
 
-// 2. Book Structure & Main Template
 #import "book.typ": (
   appendix,
   frontmatter,
@@ -26,5 +31,5 @@
   note-header,
 )
 
-// 3. Theorem Environments
 #import "theorems.typ": *
+#import "operator.typ": *
